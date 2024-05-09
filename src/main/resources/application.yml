@@ -1,0 +1,46 @@
+spring.application.name: btvl-to-itag-and-iclp-translator
+spring:
+  batch:
+    job:
+      enabled: false
+      name: btvlFileIngestionJob
+    jdbc:
+      initialize-schema: always
+
+  datasource:
+    url: jdbc:sqlserver://127.0.0.1:1435;database=apolloits_custom;encrypt=true;trustServerCertificate=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    username: ApolloViaplus
+    password: 4apS7b*Z@i$8ScV1K%N0WvP8&XV9$C1A90$UUd11EK&#Z*B6x2
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  application:
+    admin:
+      enabled: true
+      jmx-name: org.springframework.boot:type=Admin,name=SpringBatchAdmin
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    properties:
+      hibernate:
+        format_sql: true
+        order_updates: true
+        order_inserts: true
+        jdbc:
+          batch_size: 10000
+    generate-ddl: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
+
+
+## Hibernate Properties
+# The SQL dialect makes Hibernate generate better SQL for the chosen database
+spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.SQLServer2012Dialect
+config:
+  source-directory: C:\Users\ApolloViaplus\Downloads\CUSIOP_File_Samples\CUSIO_File_Samples\9002_0041_20240314055944_BTVL\
+  source-file-name: 9002_0041_20240314055944_BTVL.txt
