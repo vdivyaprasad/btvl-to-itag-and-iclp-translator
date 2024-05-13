@@ -8,9 +8,9 @@ spring:
       initialize-schema: always
 
   datasource:
-    url: jdbc:sqlserver://127.0.0.1:1435;database=apolloits_custom;encrypt=true;trustServerCertificate=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    url: jdbc:sqlserver://127.0.0.1:1435;database=Apolloits_custom;encrypt=true;trustServerCertificate=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
     username: ApolloViaplus
-    password: 4apS7b*Z@i$8ScV1K%N0WvP8&XV9$C1A90$UUd11EK&#Z*B6x2
+    password: 1sLI98!L&N%4vsN3d!30IdF1&VU9*NUOnl#CDp84GG**O@I1%9
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   application:
     admin:

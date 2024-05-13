@@ -2,6 +2,7 @@ package com.apolloits.viaplus.btvltoitagandiclptranslator.mapper;
 
 import com.apolloits.viaplus.btvltoitagandiclptranslator.entity.ItagAwayDetailEntity;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.model.BulkTagValidationListFile.TagValidationList;
+import com.apolloits.viaplus.btvltoitagandiclptranslator.model.CustomerLicensePlateFile.LicensePlateFileDetail;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.model.TagStatusFile.ITagStatusFileDetail;
 import com.thoughtworks.xstream.core.ReferenceByIdMarshaller;
 import org.glassfish.jaxb.core.v2.model.core.ID;
@@ -24,4 +25,11 @@ public class ItagEntityMapper {
         return itagAwayDetailEntity;
 
     }
+
+    /*public IclpAwayDetailEntity mapToIclpEntity(LicensePlateFileDetail detail) {
+        IclpAwayDetailEntity iclpAwayDetailEntity = new IclpAwayDetailEntity();
+        iclpAwayDetailEntity.setLicenseAccountNumber(detail.getLicensePlateTagSerialNumber());
+        iclpAwayDetailEntity.setLicenseType(detail.getLicensePlateType());
+        return iclpAwayDetailEntity;
+    }*/
 }

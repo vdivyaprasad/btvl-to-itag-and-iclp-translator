@@ -1,4 +1,3 @@
-/*
 package com.apolloits.viaplus.btvltoitagandiclptranslator.entity;
 
 import lombok.Data;
@@ -14,4 +13,3 @@ public class EntityCompositeDetails implements Serializable {
     private String state;
     private String licensePlateNumber;
 }
-*/

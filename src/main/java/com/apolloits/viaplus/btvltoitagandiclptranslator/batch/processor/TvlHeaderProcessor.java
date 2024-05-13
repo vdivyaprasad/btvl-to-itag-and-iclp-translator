@@ -3,12 +3,8 @@ package com.apolloits.viaplus.btvltoitagandiclptranslator.batch.processor;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.batch.validator.TvlFileValidator;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.entity.FileHeaderDetailEntity;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.entity.XferFileControlEntity;
-import com.apolloits.viaplus.btvltoitagandiclptranslator.mapper.ItagEntityMapper;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.model.BulkTagValidationListFile.TVLHeader;
-import com.apolloits.viaplus.btvltoitagandiclptranslator.model.BulkTagValidationListFile.TVLTagDetails;
-import com.apolloits.viaplus.btvltoitagandiclptranslator.model.BulkTagValidationListFile.TagValidationList;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.service.DatabaseLogger;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.annotation.BeforeProcess;
@@ -40,7 +36,7 @@ public class TvlHeaderProcessor implements ItemProcessor<TVLHeader, FileHeaderDe
     public FileHeaderDetailEntity process(TVLHeader tvlHeader) {
         //code to process the file
         Boolean headerFlag = TvlFileValidator.validateTVLHeader(tvlHeader);
-        log.info("TVL Header validation: {}",headerFlag+" for the file submitted on: {}" ,tvlHeader.getSubmittedDateTime());
+        log.info("TVL Header validation: {}",headerFlag+"for the file submitted on: {}" ,tvlHeader.getSubmittedDateTime());
 
         FileHeaderDetailEntity fileHeaderDetailEntity = new FileHeaderDetailEntity();
         fileHeaderDetailEntity.setTagAgencyId(tvlHeader.getHomeAgencyIdNumber());

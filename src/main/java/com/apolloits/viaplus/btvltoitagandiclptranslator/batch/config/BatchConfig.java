@@ -3,8 +3,7 @@ package com.apolloits.viaplus.btvltoitagandiclptranslator.batch.config;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.batch.processor.TvlHeaderProcessor;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.batch.reader.CustomItemReader;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.batch.processor.TagValidationFileProcessor;
-import com.apolloits.viaplus.btvltoitagandiclptranslator.batch.writer.TvlHeaderWriter;
-import com.apolloits.viaplus.btvltoitagandiclptranslator.batch.writer.TvlItemWriter;
+import com.apolloits.viaplus.btvltoitagandiclptranslator.batch.writer.*;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.entity.FileHeaderDetailEntity;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.entity.ItagAwayDetailEntity;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.model.BulkTagValidationListFile.TVLHeader;
@@ -22,6 +21,10 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.*;
+import org.springframework.batch.item.file.FlatFileItemWriter;
+import org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder;
+import org.springframework.batch.item.file.transform.PassThroughLineAggregator;
+import org.springframework.batch.item.support.CompositeItemWriter;
 import org.springframework.batch.item.xml.StaxEventItemReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +34,7 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -114,6 +118,32 @@ public class BatchConfig {
         return asyncTaskExecutor;
     }
 
+    /*@Bean
+    public CompositeItemWriter<CompositeTagDetail> compositeItemWriter() throws Exception {
+        CompositeItemWriter<CompositeTagDetail> compositeItemWriter = new CompositeItemWriter<>();
+        List<ItemWriter<?super CompositeTagDetail>> itemWriterList=new ArrayList<>();
+        itemWriterList.add(tvlItemWriter());
+        itemWriterList.add(itagItemWriter());
+        //itemWriterList.add(iclpItemWriter());
+        compositeItemWriter.setDelegates(itemWriterList);
+        compositeItemWriter.afterPropertiesSet();
+        return compositeItemWriter;
+    }*/
+
+    private CustomCompositeItemWriter compositeItemWriter() {
+        return new CustomCompositeItemWriter(new ItagItemWriter(),new IclpWriter());
+
+    }
+    @Bean
+    public FlatFileItemWriter<Integer> skippedItemWriter() {
+        return new FlatFileItemWriterBuilder<Integer>()
+                .name("skippedItemWriter")
+                .resource(new FileSystemResource("C://Users/ApolloViaplus/Downloads/Output/skipped.txt"))
+                .lineAggregator(new PassThroughLineAggregator<>())
+                .build();
+
+    }
+
     public Step btvlFileHeaderIngestionStep(){
         return new StepBuilder("btvl-file-header-ingestion-step", jobRepository)
                 .<TVLHeader, FileHeaderDetailEntity>chunk(300, platformTransactionManager)
@@ -131,6 +161,8 @@ public class BatchConfig {
                 .reader(tvlFileReader())
                 .processor(processor())
                 .writer(tvlItemWriter())
+                .writer(compositeItemWriter())
+                .stream(skippedItemWriter())
                 .taskExecutor(executor)
                 .build();
     }

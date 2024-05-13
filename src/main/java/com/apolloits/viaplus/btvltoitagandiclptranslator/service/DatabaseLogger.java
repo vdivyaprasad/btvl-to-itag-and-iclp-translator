@@ -1,5 +1,6 @@
 package com.apolloits.viaplus.btvltoitagandiclptranslator.service;
 
+//import com.apolloits.viaplus.btvltoitagandiclptranslator.entity.IclpAwayDetailEntity;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.entity.ItagAwayDetailEntity;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.entity.XferFileControlEntity;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.model.TagStatusFile.ITagStatusFileDetail;
@@ -15,11 +16,13 @@ public class DatabaseLogger {
 
     private final TVLRepository tvlRepository;
     private final ItagRepository itagRepository;
+    //private final IclpRepository iclpRepository;
 
     @Autowired
     public DatabaseLogger(TVLRepository tvlRepository, ItagRepository itagRepository) {
         this.tvlRepository = tvlRepository;
         this.itagRepository = itagRepository;
+        //this.iclpRepository = iclpRepository;
     }
     public void insertToFileControlEntity(XferFileControlEntity entity){
         // Insert to file control entity
@@ -31,4 +34,9 @@ public class DatabaseLogger {
         System.out.println("DatabaseLogger: Size of itagAwayDetailEntity"+itagAwayDetailEntity.size());
         itagRepository.saveAll(itagAwayDetailEntity);
     }
+
+    /*public void insertToIclpAwayEntity(List<IclpAwayDetailEntity> iclpAwayDetailEntities) {
+        System.out.println("DatabaseLogger: Size of iclpAwayDetailEntities"+iclpAwayDetailEntities.size());
+        iclpRepository.saveAll(iclpAwayDetailEntities);
+    }*/
 }

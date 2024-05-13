@@ -19,8 +19,8 @@ public class IclpAwayDetailEntity {
     private String licenseVin;
     private String licenseGuaranteed;
     @Id
-    private Long */
-/*id*//*
+    private Long
+id
 ;
 }
 */
