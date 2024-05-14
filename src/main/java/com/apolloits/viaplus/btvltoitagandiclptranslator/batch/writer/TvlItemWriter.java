@@ -6,19 +6,24 @@ import com.apolloits.viaplus.btvltoitagandiclptranslator.model.CompositeTagDetai
 import com.apolloits.viaplus.btvltoitagandiclptranslator.model.CustomerLicensePlateFile.LicensePlateFileDetail;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.model.TagStatusFile.ITagStatusFileDetail;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.service.DatabaseLogger;
+import lombok.RequiredArgsConstructor;
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TvlItemWriter implements ItemWriter<CompositeTagDetail> {
+    private final DatabaseLogger databaseLogger;
+    private final ItagEntityMapper itagEntityMapper;
 
-    @Autowired
-    private DatabaseLogger databaseLogger;
-    @Autowired
-    private ItagEntityMapper itagEntityMapper;
+    public TvlItemWriter(DatabaseLogger databaseLogger, ItagEntityMapper itagEntityMapper) {
+        this.databaseLogger = databaseLogger;
+        this.itagEntityMapper = itagEntityMapper;
+    }
 
     @Override
     public void write(Chunk<? extends CompositeTagDetail> compositeTagDetails) throws Exception {
@@ -44,16 +49,18 @@ public class TvlItemWriter implements ItemWriter<CompositeTagDetail> {
             for (ITagStatusFileDetail detail : compositeTagDetail.getITagStatusFileDetail()) {
                 ItagAwayDetailEntity entity = itagEntityMapper.mapToItagEntity(detail);
                 itagStatusEntities.add(entity);
-                if (itagStatusEntities.size() == 1000) {
+                /*if (itagStatusEntities.size() == 500) {
                     System.out.println("Writing to database of size" + itagStatusEntities.size());
                     databaseLogger.insertToItagStatusEntity(itagStatusEntities);
                     itagStatusEntities.clear();
                 }
                 if (!itagStatusEntities.isEmpty()) {
                     databaseLogger.insertToItagStatusEntity(itagStatusEntities);
-                }
+
+                }*/
             }
         });
+        databaseLogger.insertToItagStatusEntity(itagStatusEntities);
     }
 
 }

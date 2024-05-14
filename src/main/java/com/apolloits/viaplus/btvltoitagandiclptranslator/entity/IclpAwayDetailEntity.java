@@ -11,16 +11,21 @@ import lombok.Data;
 @Data
 public class IclpAwayDetailEntity {
 
+    private String fileId;
+    private String clientID;
+    private String licenseState;
+    private String licenseNumber;
     private String licenseType;
+    private String tagAgencyID;
+    private String tagSerialNumber;
     private String licenseEffectiveFrom;
     private String licenseEffectiveTo;
-    private String licenseHomeAgencyId;
+    private String licenseHomeAgencyID;
     private String licenseAccountNumber;
-    private String licenseVin;
+    private String licenseVIN;
     private String licenseGuaranteed;
-    @Id
-    private Long
-id
-;
+    private String licenseRegistrationDate;
+    private String licenseUpdatedDate;
+
 }
 */

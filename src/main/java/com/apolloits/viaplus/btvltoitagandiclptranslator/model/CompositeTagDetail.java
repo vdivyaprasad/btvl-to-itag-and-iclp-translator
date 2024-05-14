@@ -10,6 +10,8 @@ import java.util.List;
 
 @Data
 public class CompositeTagDetail {
+    private ITagStatusFileHeader iTagStatusFileHeader;
+    private LicensePlateFileHeader licensePlateFileHeader;
     private List<ITagStatusFileDetail> iTagStatusFileDetail;
     private List<LicensePlateFileDetail> licensePlateFileDetail;
 }

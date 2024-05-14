@@ -8,10 +8,12 @@ import jakarta.xml.bind.annotation.XmlType;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @XmlRootElement(name = "TVLHeader")
 @XmlType(propOrder = {"submittedFileType", "submittedDateTime", "SSIOPHubIdNumber", "homeAgencyIdNumber", "bulkInd", "bulkIdentifierValue", "totalRecordCount"})
-public class TVLHeader {
+public class TVLHeader implements Serializable {
     @XmlElement(name = "SubmissionType")
     private String submittedFileType;
     @XmlElement(name = "SubmissionDateTime")

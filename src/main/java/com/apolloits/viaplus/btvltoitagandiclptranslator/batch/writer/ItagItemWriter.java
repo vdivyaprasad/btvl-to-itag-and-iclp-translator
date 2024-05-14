@@ -1,7 +1,17 @@
 package com.apolloits.viaplus.btvltoitagandiclptranslator.batch.writer;
 
+import com.apolloits.viaplus.btvltoitagandiclptranslator.model.BulkTagValidationListFile.TVLHeader;
 import com.apolloits.viaplus.btvltoitagandiclptranslator.model.TagStatusFile.ITagStatusFileDetail;
+import com.apolloits.viaplus.btvltoitagandiclptranslator.model.TagStatusFile.ITagStatusFileHeader;
+import org.springframework.batch.core.ExitStatus;
+import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.StepExecution;
+import org.springframework.batch.core.StepExecutionListener;
+import org.springframework.batch.core.annotation.AfterStep;
+import org.springframework.batch.core.annotation.BeforeStep;
+import org.springframework.batch.core.annotation.BeforeWrite;
 import org.springframework.batch.item.Chunk;
+import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 
 import org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor;
@@ -13,12 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ItagItemWriter extends FlatFileItemWriter<ITagStatusFileDetail> {
+public class ItagItemWriter extends FlatFileItemWriter<ITagStatusFileDetail>{
 
     public ItagItemWriter() {
         // Set the output file
-        String outputPath1 = "C://Users/ApolloViaplus/Downloads/Output/05102024_ITAG_FILE.ITAG";
-        this.setResource(new FileSystemResource(outputPath1));
+        String outputPath = "C://Users/ApolloViaplus/Downloads/Output/05102024_ITAG_FILE.ITAG";
+        this.setResource(new FileSystemResource(outputPath));
         this.setLineAggregator(new FixedLengthLineAggregator<>(ITagStatusFileDetail.class,
                 new String[]{"tagAgencyId", "tagSerialNumber", "tagStatus", "tagAccountInfo", "tagHomeAgencyId", "tagAccountTypeIndicator", "tagAccountNumber",
                         "tagProtocolType", "tagType", "tagMount", "tagClass"},
@@ -26,14 +36,12 @@ public class ItagItemWriter extends FlatFileItemWriter<ITagStatusFileDetail> {
                         "%s", "%s",
                         "%s", "%s",
                         "%s", "%s", "%s", "%s"}));
-    /*tagAgencyId=0034, tagSerialNumber=88811410, tagStatus=1,
-     tagAccountInfo=TagAccountInfo, tagHomeAgencyId=null,
-    tagAccountTypeIndicator=null, tagAccountNumber=3000003927,
-    tagProtocolType=T6, tagType=L, tagMount=null, tagClass=2)*/
+
     }
 
     @Override
     public void write(Chunk<? extends ITagStatusFileDetail> chunk) throws Exception {
+
         List<ITagStatusFileDetail> iTagStatusFileDetailList = new ArrayList<>();
         chunk.forEach(item -> {
             // Set default values for null fields

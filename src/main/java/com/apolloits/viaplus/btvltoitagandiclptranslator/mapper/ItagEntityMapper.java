@@ -10,7 +10,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ItagEntityMapper {
+
+
     public ItagAwayDetailEntity mapToItagEntity(ITagStatusFileDetail iTagStatusFileDetail) {
+
         ItagAwayDetailEntity itagAwayDetailEntity = new ItagAwayDetailEntity();
         itagAwayDetailEntity.setTagStatus(iTagStatusFileDetail.getTagStatus());
         itagAwayDetailEntity.setTagHomeAgency(iTagStatusFileDetail.getTagHomeAgencyId());

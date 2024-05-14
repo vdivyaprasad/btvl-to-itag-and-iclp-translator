@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class LicensePlateFileHeader {
     private String fileType;
+    private String version;
     private String fromAgencyId;
-    private String fileDate;
-    private String fileTime;
+    private String fileDateTime;
     private String recordCount;
 
 }

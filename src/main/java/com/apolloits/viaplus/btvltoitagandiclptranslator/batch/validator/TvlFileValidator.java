@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TvlFileValidator {
 
-    public static boolean validateTVLHeader(TVLHeader tvlHeader) {
+    public boolean validateTVLHeader(TVLHeader tvlHeader) {
 
         return tvlHeader.getSubmittedFileType().equals("STVL") &&
                 tvlHeader.getSubmittedDateTime().length() == 20 &&

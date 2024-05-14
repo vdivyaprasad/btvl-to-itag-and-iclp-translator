@@ -8,6 +8,8 @@ import jakarta.xml.bind.annotation.XmlType;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @XmlRootElement(name = "TVLTagDetails")
 @XmlType(propOrder = {"homeAgencyId", "tagAgencyId", "tagSerialNumber", "tagStatus", "tagClass", "tvlPlateDetails", "tvlAccountDetails"})
@@ -23,7 +25,7 @@ public class TVLTagDetails {
     @XmlElement(name = "TagClass")
     private String tagClass;
     @XmlElement(name = "TVLPlateDetails")
-    private TVLPlateDetails tvlPlateDetails;
+    private List<TVLPlateDetails> tvlPlateDetails;
     @XmlElement(name = "TVLAccountDetails")
     private TVLAccountDetails tvlAccountDetails;
 

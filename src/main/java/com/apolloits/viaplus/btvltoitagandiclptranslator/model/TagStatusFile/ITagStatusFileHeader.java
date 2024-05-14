@@ -5,12 +5,9 @@ import lombok.Data;
 @Data
 public class ITagStatusFileHeader {
     private String fileType;
+    private String version;
     private String fromAgencyId;
-    private String fileDate;
-    private String fileTime;
+    private String fileDateTime;
     private String recordCount;
-    private String countStat1;
-    private String countStat2;
-    private String countStat3;
-    private String countStat4;
+
 }
